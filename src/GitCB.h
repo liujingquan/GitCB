@@ -1,8 +1,8 @@
 /***************************************************************
- * Name:      GitCB
+ * Name:      gitcb
  * Purpose:   Code::Blocks plugin
  * Author:    icequan (jingquan233@gmail.com)
- * Created:   2017-02-17
+ * Created:   2017-03-05
  * Copyright: icequan
  * License:   GPL
  **************************************************************/
@@ -26,34 +26,6 @@ class GitCB : public cbPlugin
         GitCB();
         /** Destructor. */
         virtual ~GitCB();
-
-        /** Return the plugin's configuration priority.
-          * This is a number (default is 50) that is used to sort plugins
-          * in configuration dialogs. Lower numbers mean the plugin's
-          * configuration is put higher in the list.
-          */
-        virtual int GetConfigurationPriority() const { return 50; }
-
-        /** Return the configuration group for this plugin. Default is cgUnknown.
-          * Notice that you can logically OR more than one configuration groups,
-          * so you could set it, for example, as "cgCompiler | cgContribPlugin".
-          */
-        virtual int GetConfigurationGroup() const { return cgUnknown; }
-
-        /** Return plugin's configuration panel.
-          * @param parent The parent window.
-          * @return A pointer to the plugin's cbConfigurationPanel. It is deleted by the caller.
-          */
-        virtual cbConfigurationPanel* GetConfigurationPanel(wxWindow* parent){ return 0; }
-
-        /** Return plugin's configuration panel for projects.
-          * The panel returned from this function will be added in the project's
-          * configuration dialog.
-          * @param parent The parent window.
-          * @param project The project that is being edited.
-          * @return A pointer to the plugin's cbConfigurationPanel. It is deleted by the caller.
-          */
-        virtual cbConfigurationPanel* GetProjectConfigurationPanel(wxWindow* parent, cbProject* project){ return 0; }
 
         /** This method is called by Code::Blocks and is used by the plugin
           * to add any menu items it needs on Code::Blocks's menu bar.\n
@@ -115,14 +87,14 @@ class GitCB : public cbPlugin
         virtual void OnRelease(bool appShutDown);
 
     private:
-        void Execute(wxString command,wxArrayString output);//execute command line
-        //command function
-        void Commit(wxCommandEvent& event);
-        void Clone(wxCommandEvent& event);
-
+        void newpos(wxCommandEvent& event);
+        void clone(wxCommandEvent& event);
+        void commit(wxCommandEvent& event);
 
         int commitid=wxNewId();
         int cloneid=wxNewId();
+        int pushid=wxNewId();
+        int newposid=wxNewId();
         DECLARE_EVENT_TABLE();
 };
 

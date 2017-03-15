@@ -3,6 +3,7 @@
 #include "GitCB.h"
 #include"CommitDialog.h"
 
+
 // Register the plugin with Code::Blocks.
 // We are using an anonymous namespace so we don't litter the global one.
 namespace
@@ -55,14 +56,18 @@ void GitCB::BuildMenu(wxMenuBar* menuBar)
 {
     wxMenu* menu=menuBar->GetMenu(menuBar->FindMenu(_("Tools")));
     wxMenu* git=new wxMenu();
+    wxMenu* localrepository=new wxMenu();
+    localrepository->Append(commitid,_("&commit"));
    //menuBar->Insert(menuBar->FindMenu(_("&Tools"))+1,menu,wxT("&Team"));
-    git->Append(commitid,_("&commit"));
-    git->AppendSeparator();
-    git->Append(cloneid,_("&clone"));
+    localrepository->Append(pushid,_("&push"));
+    git->Append(cloneid,_("&clone repository"));
+    git->Append(newposid,_("&creat repository"));
+    git->AppendSubMenu(localrepository,_("&local repository"));
     menu->AppendSubMenu(git,_("&Git"));
-    Connect(commitid,wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(GitCB::Commit));
-    Connect(cloneid,wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(GitCB::Clone));
-
+    Connect(newposid,wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(GitCB::newpos));
+    Connect(commitid,wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(GitCB::commit));
+    Connect(cloneid,wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(GitCB::clone));
+   // Connect(cloneid,wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(GitCB::Clone));
     //The application is offering its menubar for your plugin,
     //to add any menu items you want...
     //Append any items you need in the menu...
@@ -79,27 +84,22 @@ void GitCB::BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeD
     NotImplemented(_T("GitCB::BuildModuleMenu()"));
 }
 
-void GitCB::Execute(wxString command,wxArrayString output)
-{
-   /* wxstring dir;
-    dir=Manager::Get()->GetProjectManager()->GetActiveProject();
-    if(dir.empty())
-        return -1;*/
-
-
-
-
-
-}
-
-void GitCB::Commit(wxCommandEvent& event)
-{
-    CommitDialog commit(Manager::Get()->GetAppWindow());
-
-}
-
-void GitCB::Clone(wxCommandEvent& event)
+void GitCB::newpos(wxCommandEvent& event)
 {
 
 }
+
+void GitCB::commit(wxCommandEvent& event)
+{
+    CommitDialog* dialog=new CommitDialog(Manager::Get()->GetAppWindow());
+    dialog->ShowModal();
+}
+
+void GitCB::clone(wxCommandEvent& event)
+{
+
+}
+
+
+
 
