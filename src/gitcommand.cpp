@@ -1,41 +1,51 @@
 #include"gitcommand.h"
 
+static GitCommand* Command_Instance=nullptr;
 
-//constructor
 GitCommand::GitCommand()
 {
 
 }
-//destructor
+
 GitCommand::~GitCommand()
 {
 
 }
 
-void GitCommand::Execute()
+void GitCommand::Execute(wxString& command,wxArrayString& output,wxArrayString& error)
 {
-
+#ifdef _WXMSW_
+    wxExecute(command,output,error);
+#else
+    wxExecute(command,output,error);
+#endif // _WXMSW_
 }
 
 GitCommand* GitCommand::GetCommand()
 {
-
+    if(!Command_Instance)
+        Command_Instance=new GitCommand();
+    return Command_Instance;
 }
 
+void GitCommand::init()
+{
+    Execute(_T("git init"));
+}
+
+void GitCommand::add()
+{
+    Execute(_T("git add"));
+}
 
 void GitCommand::commit()
 {
-
-
-    wxArrayString output;
-    wxExecute(_T("git commit"),output);
-
+    wxString message;
+    Execute(_T("git commit -m ")+message);
 }
 
 void GitCommand::clone()
 {
-    wxString command;
-    wxExecute(command,output);
 
 }
 
