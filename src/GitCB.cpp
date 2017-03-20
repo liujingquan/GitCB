@@ -35,6 +35,7 @@ GitCB::~GitCB()
 
 void GitCB::OnAttach()
 {
+
     // do whatever initialization you need for your plugin
     // NOTE: after this function, the inherited member variable
     // m_IsAttached will be TRUE...

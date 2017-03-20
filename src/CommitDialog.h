@@ -17,13 +17,14 @@ class CommitDialog: public wxDialog
 		virtual ~CommitDialog();
 
 		//(*Declarations(CommitDialog)
-		wxStaticText* StaticText2;
+		wxButton* Button4;
 		wxButton* Button1;
 		wxCheckListBox* CheckListBox1;
 		wxStaticText* StaticText1;
+		wxButton* Button2;
+		wxButton* Button3;
 		wxTextCtrl* TextCtrl2;
 		wxTextCtrl* TextCtrl1;
-		wxTextCtrl* TextCtrl3;
 		//*)
 
 	protected:
@@ -35,7 +36,6 @@ class CommitDialog: public wxDialog
 
 		//(*Handlers(CommitDialog)
 		void OnButton2Click(wxCommandEvent& event);
-		void OnButton1Click(wxCommandEvent& event);
 		//*)
 
 		DECLARE_EVENT_TABLE()
