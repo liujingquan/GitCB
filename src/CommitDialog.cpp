@@ -1,9 +1,9 @@
 #include "CommitDialog.h"
-
+#include "gitcommand.h"
 //(*InternalHeaders(CommitDialog)
 #include <wx/xrc/xmlres.h>
 //*)
-
+#include<wx/filedlg.h>
 //(*IdInit(CommitDialog)
 //*)
 
@@ -22,10 +22,14 @@ CommitDialog::CommitDialog(wxWindow* parent)
 	CheckListBox1 = (wxCheckListBox*)FindWindow(XRCID("ID_CHECKLISTBOX1"));
 	TextCtrl2 = (wxTextCtrl*)FindWindow(XRCID("ID_TEXTCTRL2"));
 	Button1 = (wxButton*)FindWindow(XRCID("ID_BUTTON1"));
-	Button3 = (wxButton*)FindWindow(XRCID("ID_BUTTON3"));
 	Button4 = (wxButton*)FindWindow(XRCID("ID_BUTTON4"));
 
+	Connect(XRCID("ID_TEXTCTRL1"),wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&CommitDialog::OnTextCtrl1Text2);
 	Connect(XRCID("ID_BUTTON2"),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&CommitDialog::OnButton2Click);
+	Connect(XRCID("ID_CHECKLISTBOX1"),wxEVT_COMMAND_CHECKLISTBOX_TOGGLED,(wxObjectEventFunction)&CommitDialog::OnCheckListBox1Toggled);
+	Connect(XRCID("ID_TEXTCTRL2"),wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&CommitDialog::OnTextCtrl2Text2);
+	Connect(XRCID("ID_BUTTON1"),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&CommitDialog::OnButton1Click);
+	Connect(XRCID("ID_BUTTON4"),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&CommitDialog::OnButton4Click);
 	//*)
 }
 
@@ -35,12 +39,46 @@ CommitDialog::~CommitDialog()
 	//*)
 }
 
-
+//Browse the directory and insert items
 void CommitDialog::OnButton2Click(wxCommandEvent& event)
 {
-    wxDirDialog dialog(this,wxDirSelectorPromptStr,wxEmptyString);
-    if (dialog.ShowModal()=wxID_OK)
+    wxFileDialog dialog(this,wxFileSelectorPromptStr,wxEmptyString,wxEmptyString,wxFileSelectorDefaultWildcardStr);
+    if (dialog.ShowModal())
     {
-        TextCtrl1->SetValue(dialog.GetPath());
+        const wxString filename=dialog.GetFilename();
+        TextCtrl1->SetValue(dialog.GetDirectory());
+        //for(unsigned int i=0;i<=CheckListBox1->GetCount();i++)
+        CheckListBox1->InsertItems(1,&filename,0);
     }
+}
+//commit file
+void CommitDialog::OnButton1Click(wxCommandEvent& event)
+{
+    for(unsigned int i=0;i<CheckListBox1->GetCount();++i)
+    {
+        if (CheckListBox1->IsChecked(i))
+        {
+            GitCommand::GetCommand()->add(CheckListBox1->GetString(i));
+        }
+    }
+    GitCommand::GetCommand()->commit(TextCtrl2->GetValue());
+}
+//checklistbox
+void CommitDialog::OnCheckListBox1Toggled(wxCommandEvent& event)
+{
+
+}
+//cancel button
+void CommitDialog::OnButton4Click(wxCommandEvent& event)
+{
+   //CommitDialog dialog;
+   //dialog.DestroyGripper();
+}
+//comment text
+void CommitDialog::OnTextCtrl2Text2(wxCommandEvent& event)
+{
+}
+//directory text
+void CommitDialog::OnTextCtrl1Text2(wxCommandEvent& event)
+{
 }

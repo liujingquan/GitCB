@@ -90,7 +90,7 @@ class GitCB : public cbPlugin
         void newpos(wxCommandEvent& event);
         void clone(wxCommandEvent& event);
         void commit(wxCommandEvent& event);
-
+        int logSlot;
         int commitid=wxNewId();
         int cloneid=wxNewId();
         int pushid=wxNewId();

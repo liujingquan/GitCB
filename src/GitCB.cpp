@@ -2,6 +2,7 @@
 #include <configurationpanel.h>
 #include "GitCB.h"
 #include"CommitDialog.h"
+#include <loggers.h>
 
 
 // Register the plugin with Code::Blocks.
@@ -35,6 +36,11 @@ GitCB::~GitCB()
 
 void GitCB::OnAttach()
 {
+	Logger *gitBlocksLogger = new TextCtrlLogger();
+	logSlot = Manager::Get()->GetLogManager()->SetLog(gitBlocksLogger);
+	Manager::Get()->GetLogManager()->Slot(logSlot).title = _T("Git");
+	CodeBlocksLogEvent evtAdd1(cbEVT_ADD_LOG_WINDOW, gitBlocksLogger, Manager::Get()->GetLogManager()->Slot(logSlot).title);
+	Manager::Get()->ProcessEvent(evtAdd1);
 
     // do whatever initialization you need for your plugin
     // NOTE: after this function, the inherited member variable
