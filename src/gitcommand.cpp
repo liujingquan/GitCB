@@ -1,7 +1,7 @@
 #include"gitcommand.h"
 #include <sdk.h>
 #include <loggers.h>
-#include "GitCB.h"
+
 static GitCommand* Command_Instance=nullptr;
 
 GitCommand::GitCommand()
@@ -11,7 +11,7 @@ GitCommand::GitCommand()
 
 GitCommand::~GitCommand()
 {
-
+    delete GetCommand();
 }
 
 bool GitCommand::Execute(const wxString& command,const wxString& comment)
@@ -23,7 +23,7 @@ bool GitCommand::Execute(const wxString& command,const wxString& comment)
 #else
     wxExecute(command,output,error);
 #endif // _WXMSW_
-    Manager::Get()->GetLogManager()->Log(comment,logSlot);
+    Manager::Get()->GetLogManager()->Log(comment,a.logSlot);
     return true;
 }
 
@@ -36,7 +36,7 @@ GitCommand* GitCommand::GetCommand()
 
 void GitCommand::init()
 {
-    Execute(_T("git init"),_("initializing"));
+    Execute(_T("git init"),_("initializing  a repository..."));
 }
 
 void GitCommand::add(wxString filename)
@@ -46,7 +46,7 @@ void GitCommand::add(wxString filename)
 
 void GitCommand::commit(wxString commit_message)
 {
-    Execute(_T("git commit -m ")+commit_message,_("committing"));
+    Execute(_T("git commit -m ")+commit_message,_("committing..."));
 }
 
 void GitCommand::clone(wxString link)
@@ -63,6 +63,10 @@ void GitCommand::config(wxString name,wxString e_mail)
 
 void GitCommand::cd(wxString dir)
 {
-    Execute(_T("cd ")+dir,_("/t"));
+    Execute(_T("cd ")+dir,_(" "));
 }
 
+void GitCommand::Diff()
+{
+
+}

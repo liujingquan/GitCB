@@ -22,8 +22,11 @@ class CommitDialog: public wxDialog
 		wxCheckListBox* CheckListBox1;
 		wxStaticText* StaticText1;
 		wxButton* Button2;
+		wxButton* Button5;
+		wxButton* Button3;
 		wxTextCtrl* TextCtrl2;
 		wxTextCtrl* TextCtrl1;
+		wxTextCtrl* TextCtrl3;
 		//*)
 
 	protected:
@@ -44,6 +47,7 @@ class CommitDialog: public wxDialog
 		void OnButton4Click(wxCommandEvent& event);
 		void OnTextCtrl2Text2(wxCommandEvent& event);
 		void OnTextCtrl1Text2(wxCommandEvent& event);
+		void OnTextCtrl2Text3(wxCommandEvent& event);
 		//*)
 
 		DECLARE_EVENT_TABLE()

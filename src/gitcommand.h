@@ -5,6 +5,7 @@ use the method can easily call the command function, and add command for future
 #ifndef GITCOMMAND_H
 #define GITCOMMAND_H
 
+#include "GitCB.h"
 #include<wx/wxprec.h>
 
 #ifndef WX_PRECOMP
@@ -29,8 +30,10 @@ all command function
     void clone(wxString link);
     void config(wxString name,wxString e_mail);
     void cd(wxString dir);
+    void Diff();
 
     private:
+    GitCB a;
     wxArrayString all_output;
     wxArrayString all_error;
 

@@ -87,6 +87,7 @@ class GitCB : public cbPlugin
         virtual void OnRelease(bool appShutDown);
 
     private:
+        friend class GitCommand;
         void newpos(wxCommandEvent& event);
         void clone(wxCommandEvent& event);
         void commit(wxCommandEvent& event);
