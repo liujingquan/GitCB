@@ -1,10 +1,10 @@
 #include <sdk.h> // Code::Blocks SDK
 #include <configurationpanel.h>
 #include "GitCB.h"
-#include"CommitDialog.h"
+#include"CommitmDialog.h"
 #include <loggers.h>
-
-
+#include"CloneDialog.h"
+#include"BranchDialog.h"
 // Register the plugin with Code::Blocks.
 // We are using an anonymous namespace so we don't litter the global one.
 namespace
@@ -32,16 +32,17 @@ GitCB::GitCB()
 // destructor
 GitCB::~GitCB()
 {
+
 }
 
 void GitCB::OnAttach()
 {
-	Logger *gitBlocksLogger = new TextCtrlLogger();
-	logSlot = Manager::Get()->GetLogManager()->SetLog(gitBlocksLogger);
+	Logger *gitCBLogger = new TextCtrlLogger();
+	logSlot = Manager::Get()->GetLogManager()->SetLog(gitCBLogger);
 	Manager::Get()->GetLogManager()->Slot(logSlot).title = _T("Git");
-	CodeBlocksLogEvent evtAdd1(cbEVT_ADD_LOG_WINDOW, gitBlocksLogger, Manager::Get()->GetLogManager()->Slot(logSlot).title);
+	CodeBlocksLogEvent evtAdd1(cbEVT_ADD_LOG_WINDOW, gitCBLogger, Manager::Get()->GetLogManager()->Slot(logSlot).title);
 	Manager::Get()->ProcessEvent(evtAdd1);
-
+    //Manager::Get()->GetLogManager()->Log(_("init"),logSlot);
     // do whatever initialization you need for your plugin
     // NOTE: after this function, the inherited member variable
     // m_IsAttached will be TRUE...
@@ -52,6 +53,8 @@ void GitCB::OnAttach()
 
 void GitCB::OnRelease(bool appShutDown)
 {
+
+   // Manager::Get()->GetLogManager()->DeleteLog(logSlot);
     // do de-initialization for your plugin
     // if appShutDown is true, the plugin is unloaded because Code::Blocks is being shut down,
     // which means you must not use any of the SDK Managers
@@ -65,15 +68,17 @@ void GitCB::BuildMenu(wxMenuBar* menuBar)
     wxMenu* git=new wxMenu();
     wxMenu* localrepository=new wxMenu();
     localrepository->Append(commitid,_("&commit"));
+
    //menuBar->Insert(menuBar->FindMenu(_("&Tools"))+1,menu,wxT("&Team"));
     localrepository->Append(pushid,_("&push"));
     git->Append(cloneid,_("&clone repository"));
     git->Append(newposid,_("&creat repository"));
-    git->AppendSubMenu(localrepository,_("&local repository"));
+    git->AppendSubMenu(localrepository,_("&current repository"));
     menu->AppendSubMenu(git,_("&Git"));
     Connect(newposid,wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(GitCB::newpos));
-    Connect(commitid,wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(GitCB::commit));
-    Connect(cloneid,wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(GitCB::clone));
+    Connect(commitid,wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(GitCB::showcommitdlg));
+    Connect(cloneid,wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(GitCB::showclonedlg));
+    Connect(pushid,wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(GitCB::showpushdlg));
    // Connect(cloneid,wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(GitCB::Clone));
     //The application is offering its menubar for your plugin,
     //to add any menu items you want...
@@ -96,17 +101,28 @@ void GitCB::newpos(wxCommandEvent& event)
 
 }
 
-void GitCB::commit(wxCommandEvent& event)
+void GitCB::showcommitdlg(wxCommandEvent& event)
 {
-    CommitDialog* dialog=new CommitDialog(Manager::Get()->GetAppWindow());
-    dialog->ShowModal();
+    if(!IsAttached())
+        return;
+    CommitmDialog dialog(Manager::Get()->GetAppWindow());
+    dialog.ShowModal();
 }
 
-void GitCB::clone(wxCommandEvent& event)
+void GitCB::showclonedlg(wxCommandEvent& event)
 {
-
+    if(!IsAttached())
+        return;
+    CloneDialog dialog(Manager::Get()->GetAppWindow());
+    dialog.ShowModal();
 }
 
-
+void GitCB::showpushdlg(wxCommandEvent& event)
+{
+    if(!IsAttached())
+        return;
+    BranchDialog dialog(Manager::Get()->GetAppWindow());
+    dialog.ShowModal();
+}
 
 

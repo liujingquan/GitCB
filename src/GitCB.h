@@ -88,14 +88,17 @@ class GitCB : public cbPlugin
 
     private:
         friend class GitCommand;
+        friend class CommitmDialog;
         void newpos(wxCommandEvent& event);
-        void clone(wxCommandEvent& event);
-        void commit(wxCommandEvent& event);
+        void showclonedlg(wxCommandEvent& event);
+        void showcommitdlg(wxCommandEvent& event);
+        void showpushdlg(wxCommandEvent&event);
         int logSlot;
         int commitid=wxNewId();
         int cloneid=wxNewId();
         int pushid=wxNewId();
         int newposid=wxNewId();
+
         DECLARE_EVENT_TABLE();
 };
 

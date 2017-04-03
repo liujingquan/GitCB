@@ -32,6 +32,14 @@ class CloneDialog: public wxDialog
 	private:
 
 		//(*Handlers(CloneDialog)
+		void OnTextCtrl1Text(wxCommandEvent& event);
+		void OnTextCtrl2Text(wxCommandEvent& event);
+		void OnButton1Click(wxCommandEvent& event);
+		void OnButton2Click(wxCommandEvent& event);
+		void OnTextCtrl2Text1(wxCommandEvent& event);
+		void OnTextCtrl1Text1(wxCommandEvent& event);
+		void OnButton1Click1(wxCommandEvent& event);
+		void OnButton2Click1(wxCommandEvent& event);
 		//*)
 
 		DECLARE_EVENT_TABLE()

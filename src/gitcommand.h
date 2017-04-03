@@ -12,30 +12,31 @@ use the method can easily call the command function, and add command for future
     #include<wx/wx.h>
 #endif // WX_PRECOMP
 
+class GitCB;  //declaration
 class GitCommand
 {
     public:
     GitCommand();                   //constructor
     ~GitCommand();                  //destructor
 //execute the command,but not sure on linux
-    bool Execute(const wxString& command,const wxString& comment);
+    void Execute(const wxString& command,const wxString& comment);
     bool valid_command();
     static GitCommand* GetCommand();//use the pointer to get the command
 /********************
 all command function
 ********************/
-    void commit(wxString commit_message);
+    void commit(const wxString& commit_message);
     void init();
-    void add(wxString filename);
-    void clone(wxString link);
-    void config(wxString name,wxString e_mail);
-    void cd(wxString dir);
+    void add(const wxString& filename);
+    void clone(const wxString& link);
+    void config(const wxString& name,const wxString& e_mail);
     void Diff();
-
+    void push();
+    wxString status();
     private:
     GitCB a;
-    wxArrayString all_output;
-    wxArrayString all_error;
+   // wxArrayString output;
+    //wxArrayString error;
 
 
 

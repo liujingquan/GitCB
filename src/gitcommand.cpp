@@ -14,17 +14,25 @@ GitCommand::~GitCommand()
     delete GetCommand();
 }
 
-bool GitCommand::Execute(const wxString& command,const wxString& comment)
+void GitCommand::Execute(const wxString& command,const wxString& comment)
 {
     wxArrayString output;
     wxArrayString error;
 #ifdef _WXMSW_
-    wxExecute(command,output,error);
+    long result=wxExecute(command,output,error);
 #else
-    wxExecute(command,output,error);
+    long result=wxExecute(command,output,error);
 #endif // _WXMSW_
-    Manager::Get()->GetLogManager()->Log(comment,a.logSlot);
-    return true;
+    if(result!=0)
+    {
+    for(size_t i=0;i<output.GetCount();++i)
+        Manager::Get()->GetLogManager()->Log(output[i],a.logSlot);
+    }else
+    {
+    for(size_t i=0;i<error.GetCount();++i)
+        Manager::Get()->GetLogManager()->Log(error[i],a.logSlot);
+    }
+
 }
 
 GitCommand* GitCommand::GetCommand()
@@ -36,37 +44,42 @@ GitCommand* GitCommand::GetCommand()
 
 void GitCommand::init()
 {
-    Execute(_T("git init"),_("initializing  a repository..."));
+    Execute(_T("git init "),_("initializing  a repository..."));
 }
 
-void GitCommand::add(wxString filename)
+void GitCommand::add(const wxString& filename)
 {
     Execute(_T("git add ")+filename,_("add to working area"));
 }
 
-void GitCommand::commit(wxString commit_message)
+void GitCommand::commit(const wxString& commit_message)
 {
     Execute(_T("git commit -m ")+commit_message,_("committing..."));
 }
 
-void GitCommand::clone(wxString link)
+void GitCommand::clone(const wxString& link)
 {
     if(!link.empty())
         Execute(_T("git clone ")+link,_("clone a remote repository"));
+
 }
 
-void GitCommand::config(wxString name,wxString e_mail)
+void GitCommand::config(const wxString& name,const wxString& e_mail)
 {
-    if (Execute(_T("git config --global user.name ")+name,_("configure your name")))
-        Execute(_T("git config --global user.email ")+e_mail,_("configure your email"));
-}
-
-void GitCommand::cd(wxString dir)
-{
-    Execute(_T("cd ")+dir,_(" "));
+    Execute(_T("git config --global user.name ")+name,_("configure your name"));
+    Execute(_T("git config --global user.email ")+e_mail,_("configure your email"));
 }
 
 void GitCommand::Diff()
 {
 
+}
+
+void GitCommand::push()
+{
+    Execute(_T("git push"),_("push to master"));
+}
+
+wxString GitCommand::status()
+{
 }
