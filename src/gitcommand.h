@@ -18,10 +18,10 @@ class GitCommand
     public:
     GitCommand();                   //constructor
     ~GitCommand();                  //destructor
-//execute the command,but not sure on linux
+    //execute the command,but not sure on linux
     void Execute(const wxString& command,const wxString& comment);
+    static GitCommand* GetCommand();
     bool valid_command();
-    static GitCommand* GetCommand();//use the pointer to get the command
 /********************
 all command function
 ********************/
@@ -34,7 +34,7 @@ all command function
     void push();
     wxString status();
     private:
-    GitCB a;
+    GitCB mes;
    // wxArrayString output;
     //wxArrayString error;
 

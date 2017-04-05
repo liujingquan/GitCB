@@ -12,12 +12,13 @@
 
 // For compilers that support precompilation, includes <wx/wx.h>
 #include <wx/wxprec.h>
-
 #ifndef WX_PRECOMP
     #include <wx/wx.h>
 #endif
-
-#include <cbplugin.h> // for "class cbPlugin"
+#include <cbplugin.h>
+// for "class cbPlugin"
+class wxMenu;           //forward declare
+class TextCtrlLogger;
 
 class GitCB : public cbPlugin
 {
@@ -87,17 +88,25 @@ class GitCB : public cbPlugin
         virtual void OnRelease(bool appShutDown);
 
     private:
+        wxMenu* git;
+        wxMenu* menu;
+        wxMenu* currentrepository;
+        TextCtrlLogger* gitcblogger;
         friend class GitCommand;
         friend class CommitmDialog;
-        void newpos(wxCommandEvent& event);
+        void setgitcb(wxCommandEvent& event);
         void showclonedlg(wxCommandEvent& event);
         void showcommitdlg(wxCommandEvent& event);
-        void showpushdlg(wxCommandEvent&event);
+        void showpushdlg(wxCommandEvent& event);
+        void showbranchdlg(wxCommandEvent& event);
+        bool Is_loaded();
         int logSlot;
         int commitid=wxNewId();
         int cloneid=wxNewId();
         int pushid=wxNewId();
         int newposid=wxNewId();
+        int branchid=wxNewId();
+        int initid=wxNewId();
 
         DECLARE_EVENT_TABLE();
 };

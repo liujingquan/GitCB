@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<resource_extra>
+		<object root="1" />
+		<object name="ID_STATICTEXT1" class="wxStaticText" variable="StaticText1" member="yes" />
+		<object name="ID_TEXTCTRL1" class="wxTextCtrl" variable="TextCtrl1" member="yes" />
+		<object name="ID_CHOICEBOOK1" class="wxChoicebook" variable="Choicebook1" member="yes" />
+	</resource_extra>
+</wxsmith>

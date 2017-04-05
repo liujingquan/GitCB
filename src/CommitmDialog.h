@@ -2,11 +2,11 @@
 #define COMMITMDIALOG_H
 
 //(*Headers(CommitmDialog)
+#include <wx/button.h>
+#include <wx/checklst.h>
+#include <wx/dialog.h>
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
-#include <wx/checklst.h>
-#include <wx/button.h>
-#include <wx/dialog.h>
 //*)
 
 class CommitmDialog: public wxDialog
@@ -17,14 +17,14 @@ class CommitmDialog: public wxDialog
 		virtual ~CommitmDialog();
 
 		//(*Declarations(CommitmDialog)
-		wxButton* Button4;
 		wxButton* Button1;
-		wxCheckListBox* CheckListBox1;
-		wxStaticText* StaticText1;
 		wxButton* Button2;
 		wxButton* Button3;
-		wxTextCtrl* TextCtrl2;
+		wxButton* Button4;
+		wxCheckListBox* CheckListBox1;
+		wxStaticText* StaticText1;
 		wxTextCtrl* TextCtrl1;
+		wxTextCtrl* TextCtrl2;
 		wxTextCtrl* TextCtrl3;
 		//*)
 
@@ -40,6 +40,7 @@ class CommitmDialog: public wxDialog
 		void OnButton2Click(wxCommandEvent& event);
 		void OnCheckListBox1Toggled(wxCommandEvent& event);
 		void OnTextCtrl1Text(wxCommandEvent& event);
+		void OnTextCtrl1Text1(wxCommandEvent& event);
 		//*)
 
 		DECLARE_EVENT_TABLE()

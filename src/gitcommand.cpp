@@ -23,14 +23,15 @@ void GitCommand::Execute(const wxString& command,const wxString& comment)
 #else
     long result=wxExecute(command,output,error);
 #endif // _WXMSW_
+    Manager::Get()->GetLogManager()->Log(comment,mes.logSlot);
     if(result!=0)
     {
-    for(size_t i=0;i<output.GetCount();++i)
-        Manager::Get()->GetLogManager()->Log(output[i],a.logSlot);
+    for(size_t i=0;i<error.GetCount();++i)
+        Manager::Get()->GetLogManager()->Log(error[i],mes.logSlot);
     }else
     {
-    for(size_t i=0;i<error.GetCount();++i)
-        Manager::Get()->GetLogManager()->Log(error[i],a.logSlot);
+    for(size_t i=0;i<output.GetCount();++i)
+        Manager::Get()->GetLogManager()->Log(output[i],mes.logSlot);
     }
 
 }
@@ -44,7 +45,7 @@ GitCommand* GitCommand::GetCommand()
 
 void GitCommand::init()
 {
-    Execute(_T("git init "),_("initializing  a repository..."));
+    Execute(_T("git init"),_("initialization"));
 }
 
 void GitCommand::add(const wxString& filename)
@@ -54,20 +55,20 @@ void GitCommand::add(const wxString& filename)
 
 void GitCommand::commit(const wxString& commit_message)
 {
-    Execute(_T("git commit -m ")+commit_message,_("committing..."));
+    Execute(_T("git commit -m ")+commit_message,_("committing:\n"));
 }
 
 void GitCommand::clone(const wxString& link)
 {
     if(!link.empty())
-        Execute(_T("git clone ")+link,_("clone a remote repository"));
+        Execute(_T("git clone ")+link,_("clone a remote repository:\n"));
 
 }
 
 void GitCommand::config(const wxString& name,const wxString& e_mail)
 {
-    Execute(_T("git config --global user.name ")+name,_("configure your name"));
-    Execute(_T("git config --global user.email ")+e_mail,_("configure your email"));
+    Execute(_T("git config --global user.name ")+name,_("configure your name:\n"));
+    Execute(_T("git config --global user.email ")+e_mail,_("configure your email:\n"));
 }
 
 void GitCommand::Diff()

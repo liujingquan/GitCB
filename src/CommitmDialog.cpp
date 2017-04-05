@@ -1,8 +1,10 @@
 #include "CommitmDialog.h"
+#include"GitCB.h"
 #include"gitcommand.h"
 #include<cbproject.h>
 #include<wx/filedlg.h>
 #include<wx/filefn.h>
+
 //(*InternalHeaders(CommitmDialog)
 #include <wx/xrc/xmlres.h>
 //*)
@@ -29,11 +31,10 @@ CommitmDialog::CommitmDialog(wxWindow* parent)
 	Button3 = (wxButton*)FindWindow(XRCID("ID_BUTTON3"));
 	Button4 = (wxButton*)FindWindow(XRCID("ID_BUTTON4"));
 
-	Connect(XRCID("ID_TEXTCTRL1"),wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&CommitmDialog::OnTextCtrl1Text);
+	Connect(XRCID("ID_TEXTCTRL1"),wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&CommitmDialog::OnTextCtrl1Text1);
 	Connect(XRCID("ID_BUTTON1"),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&CommitmDialog::OnButton1Click);
 	Connect(XRCID("ID_BUTTON2"),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&CommitmDialog::OnButton2Click);
 	//*)
-
 	cbProject* project=Manager::Get()->GetProjectManager()->GetActiveProject();
 	if(project->IsLoaded())
 	{
@@ -41,7 +42,6 @@ CommitmDialog::CommitmDialog(wxWindow* parent)
         CheckListBox1->Append(project->GetFile(i)->relativeFilename);
     TextCtrl1->SetValue(project->GetExecutionDir());
     }
-
 }
 
 CommitmDialog::~CommitmDialog()
@@ -80,5 +80,9 @@ void CommitmDialog::OnCheckListBox1Toggled(wxCommandEvent& event)
 }
 
 void CommitmDialog::OnTextCtrl1Text(wxCommandEvent& event)
+{
+}
+
+void CommitmDialog::OnTextCtrl1Text1(wxCommandEvent& event)
 {
 }
