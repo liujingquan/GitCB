@@ -11,7 +11,6 @@ use the method can easily call the command function, print output and add comman
     #include<wx/wx.h>
 #endif // WX_PRECOMP
 
-class GitCB;  //declaration
 class GitCommand
 {
     public:
