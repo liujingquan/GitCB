@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_plugin_manifest_file>
+    <SdkVersion major="1" minor="30"  release="0" />
+    <Plugin name="GitCB">
+        <Value title="gitcb" />
+        <Value version="0.1" />
+        <Value description="" />
+        <Value author="icequan" />
+        <Value authorEmail="jingquan233@gmail.com" />
+        <Value authorWebsite="" />
+        <Value thanksTo="" />
+        <Value license="GPL" />
+    </Plugin>
+</CodeBlocks_plugin_manifest_file>
