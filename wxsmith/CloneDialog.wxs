@@ -12,8 +12,6 @@
 		<object name="ID_BUTTON2" class="wxButton" variable="Button2" member="yes">
 			<handler function="OnButton2Click2" entry="EVT_BUTTON" />
 		</object>
-		<object name="ID_STATICTEXT3" class="wxStaticText" variable="StaticText3" member="yes" />
-		<object name="ID_SLIDER1" class="wxSlider" variable="Slider1" member="yes" />
 		<object name="ID_TEXTCTRL3" class="wxTextCtrl" variable="TextCtrl3" member="yes" />
 	</resource_extra>
 </wxsmith>

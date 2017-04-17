@@ -15,6 +15,9 @@
 		<object name="ID_BUTTON2" class="wxButton" variable="Button2" member="yes">
 			<handler function="OnButton2Click" entry="EVT_BUTTON" />
 		</object>
+		<object name="ID_BUTTON5" class="wxButton" variable="Button5" member="yes">
+			<handler function="OnButton5Click" entry="EVT_BUTTON" />
+		</object>
 		<object name="ID_BUTTON3" class="wxButton" variable="Button3" member="yes" />
 		<object name="ID_BUTTON4" class="wxButton" variable="Button4" member="yes" />
 	</resource_extra>

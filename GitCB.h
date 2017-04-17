@@ -77,7 +77,6 @@ class GitCB : public cbPlugin
           * Think of this method as the actual constructor...
           */
         virtual void OnAttach();
-
         /** Any descendent plugin should override this virtual method and
           * perform any necessary de-initialization. This method is called by
           * Code::Blocks (PluginManager actually) when the plugin has been
@@ -93,12 +92,12 @@ class GitCB : public cbPlugin
         wxMenu* git;
         wxMenu* menu;
         wxMenu* currentrepository;
+        wxMenu* remoterepository;
+        wxMenu* gitmodule;
         TextCtrlLogger* gitcblogger;
-/**
-print output or error to log
-*/
-        void printmessage   (const wxArrayString& m_output);
 
+
+        int  Execute        (const wxString& command);
         void commit         (wxCommandEvent& event);
         void push           (wxCommandEvent& event);
         void status         (wxCommandEvent& event);
@@ -106,16 +105,17 @@ print output or error to log
         void showclonedlg   (wxCommandEvent& event);
         void showcommitdlg  (wxCommandEvent& event);
         void showbranchdlg  (wxCommandEvent& event);
-        int  Execute        (const wxString& command);
 /**
 estimate the project wheather is loaded or not,the C::B sdk has the implicit problem,do NOT use
-project->isload() here,beacause the project will be nullptr if you don't open a project,so CRASH
+project->isload() here,beacause the project will be a nullptr if you don't open a project,so CRASH
 will coming :)
 */
         bool Is_loaded();
 
         int logSlot;
+        int pullid          =wxNewId();
         int commitid        =wxNewId();
+        int patchid         =wxNewId();
         int cloneid         =wxNewId();
         int pushid          =wxNewId();
         int newposid        =wxNewId();

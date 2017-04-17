@@ -4,7 +4,6 @@
 //(*Headers(CloneDialog)
 #include <wx/button.h>
 #include <wx/dialog.h>
-#include <wx/slider.h>
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 //*)
@@ -20,10 +19,8 @@ class CloneDialog: public wxDialog
 		//(*Declarations(CloneDialog)
 		wxButton* Button1;
 		wxButton* Button2;
-		wxSlider* Slider1;
 		wxStaticText* StaticText1;
 		wxStaticText* StaticText2;
-		wxStaticText* StaticText3;
 		wxTextCtrl* TextCtrl1;
 		wxTextCtrl* TextCtrl2;
 		wxTextCtrl* TextCtrl3;

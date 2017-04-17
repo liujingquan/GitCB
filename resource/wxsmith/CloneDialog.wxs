@@ -4,17 +4,14 @@
 		<object root="1" />
 		<object name="ID_STATICTEXT1" class="wxStaticText" variable="StaticText1" member="yes" />
 		<object name="ID_STATICTEXT2" class="wxStaticText" variable="StaticText2" member="yes" />
-		<object name="ID_TEXTCTRL1" class="wxTextCtrl" variable="TextCtrl1" member="yes">
-			<handler function="OnTextCtrl1Text1" entry="EVT_TEXT" />
-		</object>
-		<object name="ID_TEXTCTRL2" class="wxTextCtrl" variable="TextCtrl2" member="yes">
-			<handler function="OnTextCtrl2Text1" entry="EVT_TEXT" />
-		</object>
+		<object name="ID_TEXTCTRL1" class="wxTextCtrl" variable="TextCtrl1" member="yes" />
+		<object name="ID_TEXTCTRL2" class="wxTextCtrl" variable="TextCtrl2" member="yes" />
 		<object name="ID_BUTTON1" class="wxButton" variable="Button1" member="yes">
-			<handler function="OnButton1Click1" entry="EVT_BUTTON" />
+			<handler function="OnButton1Click2" entry="EVT_BUTTON" />
 		</object>
 		<object name="ID_BUTTON2" class="wxButton" variable="Button2" member="yes">
-			<handler function="OnButton2Click1" entry="EVT_BUTTON" />
+			<handler function="OnButton2Click2" entry="EVT_BUTTON" />
 		</object>
+		<object name="ID_TEXTCTRL3" class="wxTextCtrl" variable="TextCtrl3" member="yes" />
 	</resource_extra>
 </wxsmith>

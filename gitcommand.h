@@ -6,23 +6,31 @@ use the method can easily call the command function, print output and add comman
 #define GITCOMMAND_H
 
 #include<wx/wxprec.h>
-
+#include<loggers.h>
 #ifndef WX_PRECOMP
     #include<wx/wx.h>
 #endif // WX_PRECOMP
 
+class wxProcess;               //forward declaration
 class GitCommand
 {
     public:
-    GitCommand();                   //constructor
-    ~GitCommand();                  //destructor
+    GitCommand();              //constructor
+    ~GitCommand();             //destructor
 
     static GitCommand* GetCommand();
     bool valid_command();
 /**
-some command function,if you want to execute another command,use Execute function
+Execut command and print message to wxText
 */
-    int  Execute        (const wxString& command);
+    int  Execute        (const wxString& command,wxTextCtrl* text);
+/**
+the overload version of Execute(),only Execute command
+*/
+    int Execute         (const wxString& command);
+/**
+some command function,
+*/
     void commit         (const wxString& commit_message);
     void add            (const wxString& filename);
     void clone          (const wxString& link);
@@ -30,19 +38,19 @@ some command function,if you want to execute another command,use Execute functio
     void config         (const wxString& name,const wxString& e_mail);
     void push           (const wxString& remotebranch);
 /**
-print output or error message to TextCtrl,EDIT:Actually,it is NOT a good idea to use wxTextctrl,
-and do NOT print message to log,IMpossible to do it.
+print message to log
 */
-    void printmessage   (wxTextCtrl& logtext);
+    void logmessage   (TextCtrlLogger* logger,int slot);
     void Diff();
+    void patch();
     void init();
+    void pull();
 
     private:
+    wxProcess* process;
     friend class CommitmDialog;
     friend class CloneDialog;
     friend class BranchDialog;
-    wxArrayString output;
-    wxArrayString error;
 
 };
 

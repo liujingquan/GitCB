@@ -6,7 +6,6 @@
 #include "CommitmDialog.h"
 #include "CloneDialog.h"
 #include "BranchDialog.h"
-#include "PushDialog.h"
 #include "gitcommand.h"
 // Register the plugin with Code::Blocks.
 // We are using an anonymous namespace so we don't litter the global one.
@@ -41,7 +40,7 @@ GitCB::~GitCB()
 void GitCB::OnAttach()
 {
     gitcblogger=new TextCtrlLogger();
-	logSlot = Manager::Get()->GetLogManager()->SetLog(gitcblogger,1);
+	logSlot = Manager::Get()->GetLogManager()->SetLog(gitcblogger);
 	Manager::Get()->GetLogManager()->Slot(logSlot).title = _T("Git");
 	CodeBlocksLogEvent evtAdd1(cbEVT_ADD_LOG_WINDOW, gitcblogger, Manager::Get()->GetLogManager()->Slot(logSlot).title);
 	Manager::Get()->ProcessEvent(evtAdd1);
@@ -67,16 +66,20 @@ void GitCB::OnRelease(bool appShutDown)
 
 void GitCB::BuildMenu(wxMenuBar* menuBar)
 {
-    wxMenu* git=new wxMenu();
-    wxMenu* menu=new wxMenu();
-    wxMenu* currentrepository=new wxMenu();
+    git=new wxMenu();
+    menu=new wxMenu();
+    currentrepository=new wxMenu();
+    remoterepository=new wxMenu();
     menu=menuBar->GetMenu(menuBar->FindMenu(_("Tools")));
     currentrepository->Append(commitid,_("&commit"));
     currentrepository->Append(branchid,_("&branch"));
+    currentrepository->Append(patchid,_("&patch"));
+    remoterepository->Append(pullid,_("&pull"));
     git->Append(cloneid,_("&clone repository"));
     git->Append(newposid,_("&creat repository"));
     git->AppendSeparator();
     git->AppendSubMenu(currentrepository,_("&current repository"));
+    git->AppendSubMenu(remoterepository,_("&remote repository"));
     menu->AppendSubMenu(git,_("&Git"));
     Connect(commitid,wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(GitCB::showcommitdlg));
     Connect(cloneid,wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(GitCB::showclonedlg));
@@ -90,7 +93,7 @@ void GitCB::BuildMenu(wxMenuBar* menuBar)
 
 void GitCB::BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeData* data)
 {
-    wxMenu* gitmodule=new wxMenu();
+    gitmodule=new wxMenu();
     gitmodule->Append(moduleinitid,_T("&Add to git"));
     gitmodule->Append(modulecommitid,_T("&commit all files"));
     gitmodule->Append(modulepushid,_T("&push"));
@@ -151,33 +154,19 @@ void GitCB::setgitcb(wxCommandEvent& event)
     wxSetWorkingDirectory(m_project->GetExecutionDir());
     Execute(_T("git init"));
 }
-void GitCB::printmessage(const wxArrayString& m_output)
+
+int GitCB::Execute(const wxString& command)
 {
     logSlot=Manager::Get()->GetLogManager()->FindIndex(gitcblogger);
     CodeBlocksLogEvent evt(cbEVT_SWITCH_TO_LOG_WINDOW,gitcblogger);
     Manager::Get()->ProcessEvent(evt);
-    for(size_t i=0;i<m_output.GetCount();++i)
-        Manager::Get()->GetLogManager()->Log(m_output[i],logSlot);
-}
-
-int GitCB::Execute(const wxString& command)
-{
-    wxArrayString error;
-    wxArrayString output;
-    cbProject* m_project=Manager::Get()->GetProjectManager()->GetActiveProject();
-    wxSetWorkingDirectory(m_project->GetExecutionDir());
-#ifdef _WXMSW_
-    long result=wxExecute(command,output,error);
-#else
-    long result=wxExecute(command,output,error);
-#endif // _WXMSW_
-    if(result!=0)
+    if(GitCommand::GetCommand()->Execute(command))
     {
-        printmessage(output);
+        GitCommand::GetCommand()->logmessage(gitcblogger,logSlot);
         return 0;
     }else
     {
-        printmessage(error);
+        Manager::Get()->GetLogManager()->Log(_("can't execute command"),logSlot);
         return -1;
     }
 }

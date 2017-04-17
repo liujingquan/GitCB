@@ -27,6 +27,7 @@ class BranchDialog: public wxDialog
 		wxStaticText* StaticText3;
 		wxTextCtrl* TextCtrl1;
 		wxTextCtrl* TextCtrl2;
+		wxTextCtrl* TextCtrl3;
 		//*)
 
 	protected:
@@ -39,6 +40,10 @@ class BranchDialog: public wxDialog
 		//(*Handlers(BranchDialog)
 		void OnButton2Click(wxCommandEvent& event);
 		void OnButton1Click(wxCommandEvent& event);
+		void OnButton1Click1(wxCommandEvent& event);
+		void OnButton2Click1(wxCommandEvent& event);
+		void OnButton3Click(wxCommandEvent& event);
+		void OnButton4Click(wxCommandEvent& event);
 		//*)
 
 		DECLARE_EVENT_TABLE()

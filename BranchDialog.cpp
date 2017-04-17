@@ -27,9 +27,12 @@ BranchDialog::BranchDialog(wxWindow* parent)
 	Button2 = (wxButton*)FindWindow(XRCID("ID_BUTTON2"));
 	Button3 = (wxButton*)FindWindow(XRCID("ID_BUTTON3"));
 	Button4 = (wxButton*)FindWindow(XRCID("ID_BUTTON4"));
+	TextCtrl3 = (wxTextCtrl*)FindWindow(XRCID("ID_TEXTCTRL3"));
 
-	Connect(XRCID("ID_BUTTON1"),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&BranchDialog::OnButton1Click);
-	Connect(XRCID("ID_BUTTON2"),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&BranchDialog::OnButton2Click);
+	Connect(XRCID("ID_BUTTON1"),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&BranchDialog::OnButton1Click1);
+	Connect(XRCID("ID_BUTTON2"),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&BranchDialog::OnButton2Click1);
+	Connect(XRCID("ID_BUTTON3"),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&BranchDialog::OnButton3Click);
+	Connect(XRCID("ID_BUTTON4"),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&BranchDialog::OnButton4Click);
 	//*)
 	cbProject* project=Manager::Get()->GetProjectManager()->GetActiveProject();
 	if(project->IsLoaded())
@@ -45,12 +48,27 @@ BranchDialog::~BranchDialog()
 //push
 void BranchDialog::OnButton2Click(wxCommandEvent& event)
 {
-
     GitCommand::GetCommand()->push(Choice1->GetString(Choice1->GetSelection()));
 }
 //Add
-void BranchDialog::OnButton1Click(wxCommandEvent& event)
+void BranchDialog::OnButton1Click1(wxCommandEvent& event)
 {
-    GitCommand::GetCommand()->Execute(_T("git branch ")+TextCtrl2->GetValue());
+    GitCommand::GetCommand()->Execute(_T("git branch ")+TextCtrl2->GetValue(),TextCtrl3);
     Choice1->Append(TextCtrl2->GetValue());
+}
+//Push
+void BranchDialog::OnButton2Click1(wxCommandEvent& event)
+{
+    wxString cmd=_T("git chechout ")+Choice1->GetString(Choice1->GetSelection());
+    if(GitCommand::GetCommand()->Execute(cmd,TextCtrl3));
+        GitCommand::GetCommand()->Execute(_T("git push"),TextCtrl3);
+}
+//Remove
+void BranchDialog::OnButton3Click(wxCommandEvent& event)
+{
+    GitCommand::GetCommand()->Execute(_T("git branch -d ")+Choice1->GetString(Choice1->GetSelection()),TextCtrl3);
+}
+//Cancel
+void BranchDialog::OnButton4Click(wxCommandEvent& event)
+{
 }

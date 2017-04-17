@@ -22,8 +22,6 @@ CloneDialog::CloneDialog(wxWindow* parent)
 	TextCtrl2 = (wxTextCtrl*)FindWindow(XRCID("ID_TEXTCTRL2"));
 	Button1 = (wxButton*)FindWindow(XRCID("ID_BUTTON1"));
 	Button2 = (wxButton*)FindWindow(XRCID("ID_BUTTON2"));
-	StaticText3 = (wxStaticText*)FindWindow(XRCID("ID_STATICTEXT3"));
-	Slider1 = (wxSlider*)FindWindow(XRCID("ID_SLIDER1"));
 	TextCtrl3 = (wxTextCtrl*)FindWindow(XRCID("ID_TEXTCTRL3"));
 
 	Connect(XRCID("ID_BUTTON1"),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&CloneDialog::OnButton1Click2);
@@ -54,13 +52,9 @@ void CloneDialog::OnButton1Click2(wxCommandEvent& event)
         wxSetWorkingDirectory(Dialog.GetPath());
     }
 }
-
+//clone
 void CloneDialog::OnButton2Click2(wxCommandEvent& event)
 {
-    GitCommand::GetCommand()->clone(TextCtrl2->GetValue());
-    for(unsigned int i=0;i<GitCommand::GetCommand()->output.GetCount();++i)
-        TextCtrl3->AppendText(GitCommand::GetCommand()->output[i]);
-    for(unsigned int i=0;i<GitCommand::GetCommand()->error.GetCount();++i)
-        TextCtrl3->AppendText(GitCommand::GetCommand()->error[i]);
+    GitCommand::GetCommand()->Execute(_T("git clone ")+TextCtrl2->GetValue(),TextCtrl3);
 }
 
