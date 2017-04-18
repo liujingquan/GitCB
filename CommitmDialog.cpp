@@ -35,6 +35,7 @@ CommitmDialog::CommitmDialog(wxWindow* parent)
 	Connect(XRCID("ID_BUTTON1"),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&CommitmDialog::OnButton1Click);
 	Connect(XRCID("ID_BUTTON2"),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&CommitmDialog::OnButton2Click);
 	Connect(XRCID("ID_BUTTON5"),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&CommitmDialog::OnButton5Click);
+	Connect(XRCID("ID_BUTTON3"),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&CommitmDialog::OnButton3Click);
 	//*)
 	cbProject* project=Manager::Get()->GetProjectManager()->GetActiveProject();
 	if(project->IsLoaded())
@@ -99,4 +100,14 @@ void CommitmDialog::OnButton5Click(wxCommandEvent& event)
         GitCommand::GetCommand()->rm(CheckListBox1->GetString((*iter)));
     }
 }
-
+//diff
+void CommitmDialog::OnButton3Click(wxCommandEvent& event)
+{
+    wxArrayInt items=0;
+    wxArrayInt::iterator iter;
+    CheckListBox1->GetCheckedItems(items);
+    for(iter=items.begin();iter!=items.end();++iter)
+    {
+        GitCommand::GetCommand()->Execute(_T("git diff ")+CheckListBox1->GetString((*iter)),TextCtrl3);
+    }
+}

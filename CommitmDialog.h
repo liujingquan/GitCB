@@ -43,6 +43,7 @@ class CommitmDialog: public wxDialog
 		void OnTextCtrl1Text(wxCommandEvent& event);
 		void OnTextCtrl1Text1(wxCommandEvent& event);
 		void OnButton5Click(wxCommandEvent& event);
+		void OnButton3Click(wxCommandEvent& event);
 		//*)
 
 		DECLARE_EVENT_TABLE()

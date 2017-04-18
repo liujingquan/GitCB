@@ -10,7 +10,6 @@ GitCommand::GitCommand()
 
 GitCommand::~GitCommand()
 {
-    delete GetCommand();
     delete process;
 }
 
@@ -28,7 +27,7 @@ int GitCommand::Execute(const wxString& command,wxTextCtrl* text)
     {
         wxInputStream *msg=process->GetInputStream();
         wxTextInputStream InputStream(*msg);
-        while(msg->IsOk())
+        while(!msg->Eof())
         {
             log=InputStream.ReadLine();
             text->AppendText(log+wxT("\n"));
