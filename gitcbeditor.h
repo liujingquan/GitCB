@@ -1,17 +1,23 @@
 #ifndef GITCBEDITOR_H
 #define GITCBEDITOR_H
 
-#include<logger.h>
+#include "editorbase.h"
+#include "cbstyledtextctrl.h"
 
-class gitcbeditor
+class cbEditor;//forward decalre
+
+class GitcbEditor
 {
 public:
-    gitcbeditor();
-    ~gitcbeditor();
-    void Append();
+    GitcbEditor();
+    ~GitcbEditor();
+    bool Init();
+    void Colourset();
+    void Append(const wxString& text);
     void Clear();
     void Copy();
-
+private:
+    cbEditor* geditor;
 };
 
 #endif // GITCBEDITOR_H

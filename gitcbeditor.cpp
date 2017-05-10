@@ -1,9 +1,23 @@
 #include "gitcbeditor.h"
+#include "editormanager.h"
 
-gitcbeditor::gitcbeditor()
+GitcbEditor::GitcbEditor()
+            :geditor(nullptr)
 {
+
+}
+GitcbEditor::~GitcbEditor()
+{
+    delete geditor;
 }
 
-gitcbeditor::~gitcbeditor()
+bool GitcbEditor::Init()
 {
+    //geditor=Manager::Get()->GetEditorManager()->Open(_T("diff"),0,nullptr);
+
+}
+
+void GitcbEditor::Append(const wxString& text)
+{
+
 }
