@@ -1,0 +1,16 @@
+   This is a git version control plugin of codeblocks.
+How to use:
+   First, you need compile it, just open the GitCB.cbp file with codeblocks,
+and build it.You will see a .cbplugin file.
+   Second, open codeblocks, go to menu->Plugins->Manager plugins->Install new, double click 
+the .cbplugin file. Make sure the plugin is enabled.
+
+How to extend:
+    This plugin implement with calling the command of git in system, It is easily to use
+Gitcommand::Getcommand()->Execute() for yourself extending.
+
+To do:
+    1, add a simple editor for diff or patch information;
+    2, save the commit data to a text file;
+    3, some strange bug when use commit by commit dialog, which cause error commit data;
+    4, test on linux;
