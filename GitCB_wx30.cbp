@@ -56,12 +56,8 @@
 		<Unit filename="CommitmDialog.h" />
 		<Unit filename="GitCB.cpp" />
 		<Unit filename="GitCB.h" />
-		<Unit filename="gitcb_set.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="gitcb_set.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="gitcbeditor.cpp" />
+		<Unit filename="gitcbeditor.h" />
 		<Unit filename="gitcommand.cpp" />
 		<Unit filename="gitcommand.h" />
 		<Unit filename="wxsmith/BranchDialog.wxs" />
